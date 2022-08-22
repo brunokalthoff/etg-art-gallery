@@ -4,41 +4,41 @@ import { useState, useEffect } from "react";
 
 function Exhibitions() {
   const [filter, setFilter] = useState("All");
-  const [filtered, setFiltered] = useState([]);
+//   const [filtered, setFiltered] = useState([]);
 
-  useEffect(() => {
-    const results = filterEntries();
-    if (results) setFiltered(results);
-    else setFiltered([]);
+//   useEffect(() => {
+//     const results = filterEntries();
+//     if (results) setFiltered(results);
+//     else setFiltered([]);
     
-  }, [filter]);
+//   }, [filter]);
 
-  const filterEntries = () => {
-    const now = Date.now();
-    if (filter === "All" || "Permanent") return exhibitions;
-    if (filter === "Actual") {
-      const results = exhibitions.filter(exhibit => {
-        const starting = Date.parse(exhibit.start.toString());
-        const ending = Date.parse(exhibit.end.toString());
-        return starting < now && ending > now;
-      });
-      return results;
-    }
-    if (filter === "Upcoming") {
-        const results = exhibitions.filter(exhibit => {
-            const starting = Date.parse(exhibit.start.toString());
-            return starting > now;
-        })
-        return results;
-    }
-    if (filter === "Past") {
-        const results = exhibitions.filter(exhibit => {
-            const ending = Date.parse(exhibit.end.toString());
-            return ending < now;
-        })
-        return results;
-    }
-  };
+//   const filterEntries = () => {
+//     const now = Date.now();
+//     if (filter === "All" || "Permanent") return exhibitions;
+//     if (filter === "Actual") {
+//       const results = exhibitions.filter(exhibit => {
+//         const starting = Date.parse(exhibit.start.toString());
+//         const ending = Date.parse(exhibit.end.toString());
+//         return starting < now && ending > now;
+//       });
+//       return results;
+//     }
+//     if (filter === "Upcoming") {
+//         const results = exhibitions.filter(exhibit => {
+//             const starting = Date.parse(exhibit.start.toString());
+//             return starting > now;
+//         })
+//         return results;
+//     }
+//     if (filter === "Past") {
+//         const results = exhibitions.filter(exhibit => {
+//             const ending = Date.parse(exhibit.end.toString());
+//             return ending < now;
+//         })
+//         return results;
+//     }
+//   };
 
   const exhibitions = [
     {
@@ -100,7 +100,7 @@ function Exhibitions() {
         </div>
       </div>
 
-      {filtered.map((exhibit, key) => {
+      {exhibitions.map((exhibit, key) => {
         return (
           <div key={key} className={styles.exhibition}>
             <div>{exhibit.name}</div>

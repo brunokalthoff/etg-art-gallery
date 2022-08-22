@@ -1,15 +1,15 @@
 import Navbar from "./Navbar";
-import Footer from "./Footer";
+import React from "react";
 
-function Layout({ children }) {
+type MyComponentProps = React.PropsWithChildren<{}>;
 
-    return (
-        <>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-        </>
-    );
+function Layout({ children }: MyComponentProps) {
+  return (
+    <>
+      <Navbar />
+      <main>{children}</main>
+    </>
+  );
 }
 
 export default Layout;
