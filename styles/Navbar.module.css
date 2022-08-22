@@ -1,0 +1,29 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  background: var(--black);
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 50px;
+  padding: 0 4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.61);
+}
+
+.linksActive {
+  color: var(--orange);
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  gap: 0 4rem;
+}

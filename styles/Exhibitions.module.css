@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  padding: 8rem 4rem;
+}
+
+.filter {
+  display: flex;
+  gap: 4rem;
+}
+
+.filter > div {
+  display: inline-block;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.active {
+    color: #288FA6;
+}
+
+.exhibition {
+    width: 80%;
+    height: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 8rem auto;
+    border: solid white;
+    border-radius: 20px;
+    padding: 4rem;;
+    font-size: 80px;
+}
+
+.soon {
+    color: #288FA6;
+}
+
+.ended {
+    color: rgb(221, 0, 255);
+}
