@@ -1,34 +1,45 @@
 .container {
   width: 100%;
-  padding: 8rem 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 0;
 }
 
 .filter {
   display: flex;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .filter > div {
   display: inline-block;
-  font-size: 50px;
+  font-size: 20px;
   cursor: pointer;
 }
 
 .active {
-    color: #288FA6;
+    color: var(--blue);
+}
+
+.exhibitions {
+  margin-top: 2rem;
 }
 
 .exhibition {
+  font-size: 2rem;
     width: 80%;
     height: 20rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
     margin: 8rem auto;
-    border: solid white;
+    border: solid rgb(0, 0, 0);
     border-radius: 20px;
-    padding: 4rem;;
-    font-size: 80px;
+    padding: 2rem;
+    cursor: pointer;
+}
+
+.exhibition:hover {
+  transform: translate(-1px, 1px);
 }
 
 .soon {

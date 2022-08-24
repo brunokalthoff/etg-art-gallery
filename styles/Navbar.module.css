@@ -5,18 +5,27 @@
   right: 0;
   z-index: 100;
   width: 100%;
-  background: var(--black);
-  height: 10rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  background: var(--white);
+  box-shadow: inset 1px 1px 10px rgba(150, 20, 179, 0.068);
+  font-size: 2rem;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 50px;
-  padding: 0 4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.61);
 }
 
 .linksActive {
-  color: var(--orange);
+  color: var(--magenta);
 }
 
 .logo {

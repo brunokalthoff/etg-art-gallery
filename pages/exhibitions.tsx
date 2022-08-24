@@ -1,61 +1,82 @@
 import Head from "next/head";
 import styles from "../styles/Exhibitions.module.css";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Exhibitions() {
   const [filter, setFilter] = useState("All");
-//   const [filtered, setFiltered] = useState([]);
+  const [exhibitions, setExhibitions] = useState<any>(null);
+  const [filtered, setFiltered] = useState<any>(null);
 
-//   useEffect(() => {
-//     const results = filterEntries();
-//     if (results) setFiltered(results);
-//     else setFiltered([]);
-    
-//   }, [filter]);
+  useEffect(() => {
+    var config = {
+      method: "get",
+      url: "/api/exhibitions",
+      headers: {},
+    };
 
-//   const filterEntries = () => {
-//     const now = Date.now();
-//     if (filter === "All" || "Permanent") return exhibitions;
-//     if (filter === "Actual") {
-//       const results = exhibitions.filter(exhibit => {
-//         const starting = Date.parse(exhibit.start.toString());
-//         const ending = Date.parse(exhibit.end.toString());
-//         return starting < now && ending > now;
-//       });
-//       return results;
-//     }
-//     if (filter === "Upcoming") {
-//         const results = exhibitions.filter(exhibit => {
-//             const starting = Date.parse(exhibit.start.toString());
-//             return starting > now;
-//         })
-//         return results;
-//     }
-//     if (filter === "Past") {
-//         const results = exhibitions.filter(exhibit => {
-//             const ending = Date.parse(exhibit.end.toString());
-//             return ending < now;
-//         })
-//         return results;
-//     }
-//   };
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        setExhibitions(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
-  const exhibitions = [
-    {
-      name: "ETG#2",
-      start: new Date(2022, 8, 10),
-      end: new Date(2022, 9, 10),
-      status: "soon",
-      statusColor: styles.soon,
-    },
-    {
-      name: "ETG#1",
-      start: new Date(2021, 1, 1),
-      end: new Date(2021, 1, 28),
-      status: "ended",
-      statusColor: styles.ended,
-    },
+  const statusColors = {
+    soon: styles.soon,
+    ended: styles.ended,
+  };
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
+
+  const formatDate = (timestamp: number): string => {
+    const date: Date = new Date(timestamp);
+    const year: number = date.getFullYear();
+    const month: string = months[date.getMonth()];
+    const day: number = date.getDate();
+    if (!timestamp) return "Permanent exhibition";
+    return `${month} ${day}, ${year}`;
+  };
+
+  useEffect(() => {
+    if (exhibitions) {
+      const results = filterEntries();
+      if (results) setFiltered(results);
+      else setFiltered(null);
+    }
+  }, [filter]);
+
+  const filterEntries = () => {
+    const now = Date.now();
+    const res = exhibitions.filter((exhibit: any) => {
+      const start = exhibit.start;
+      const end = exhibit.end;
+      console.log(now, start, end);
+      if (filter === "All") return;
+      if (filter === "Now" && (start > now || (end < now && end))) return;
+      if (filter === "Permanent" && end) return;
+      if (filter === "Future" && (start < now || !end)) return;
+      if (filter === "Past" && (!end || end > now)) return;
+      else return exhibit;
+    });
+    return res;
+  };
 
   return (
     <div className={styles.container}>
@@ -73,10 +94,10 @@ function Exhibitions() {
           All
         </div>
         <div
-          onClick={() => setFilter("Actual")}
-          className={filter === "Actual" ? styles.active : ""}
+          onClick={() => setFilter("Now")}
+          className={filter === "Now" ? styles.active : ""}
         >
-          Actual
+          Now
         </div>
         <div
           onClick={() => setFilter("Permanent")}
@@ -86,10 +107,10 @@ function Exhibitions() {
         </div>
 
         <div
-          onClick={() => setFilter("Upcoming")}
-          className={filter === "Upcoming" ? styles.active : ""}
+          onClick={() => setFilter("Future")}
+          className={filter === "Future" ? styles.active : ""}
         >
-          Upcoming
+          Future
         </div>
 
         <div
@@ -99,17 +120,34 @@ function Exhibitions() {
           Past
         </div>
       </div>
-
-      {exhibitions.map((exhibit, key) => {
-        return (
-          <div key={key} className={styles.exhibition}>
-            <div>{exhibit.name}</div>
-            <div>start: {exhibit.start.toDateString()}</div>
-            <div>end: {exhibit.end.toDateString()}</div>
-            <div className={exhibit.statusColor}> {exhibit.status} </div>
-          </div>
-        );
-      })}
+      <div className={styles.exhibitions}>
+        {!exhibitions && "There are no exhibitions"}
+        {exhibitions &&
+          !(filter !== "All") &&
+          exhibitions.map((exhibit: any, key: number) => {
+            return (
+              <div key={key} className={styles.exhibition}>
+                <div>{exhibit.name}</div>
+                <div>start: {formatDate(exhibit.start)}</div>
+                <div>end: {formatDate(exhibit.end)}</div>
+                <div></div>
+              </div>
+            );
+          })}
+        {filter !== "All" && !filtered && "Nothing found"}
+        {filter !== "All" &&
+          filtered &&
+          filtered.map((exhibit: any, key: number) => {
+            return (
+              <div key={key} className={styles.exhibition}>
+                <div>{exhibit.name}</div>
+                <div>start: {formatDate(exhibit.start)}</div>
+                <div>end: {formatDate(exhibit.end)}</div>
+                <div></div>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
