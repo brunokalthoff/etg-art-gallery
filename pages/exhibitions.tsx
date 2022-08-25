@@ -62,6 +62,7 @@ function Exhibitions() {
     }
   }, [filter]);
 
+
   const filterEntries = () => {
     const now = Date.now();
     const res = exhibitions.filter((exhibit: any) => {
@@ -85,7 +86,7 @@ function Exhibitions() {
         <meta name="description" content="Online Art Gallery" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      {/* <h1>Exhibitions</h1> */}
       <div className={styles.filter}>
         <div
           onClick={() => setFilter("All")}
@@ -130,7 +131,7 @@ function Exhibitions() {
                 <div>{exhibit.name}</div>
                 <div>start: {formatDate(exhibit.start)}</div>
                 <div>end: {formatDate(exhibit.end)}</div>
-                <div></div>
+                <h2 className={exhibit.status === "soon!" ? styles.soon : styles.ended}>{exhibit.status}</h2>
               </div>
             );
           })}
@@ -143,7 +144,7 @@ function Exhibitions() {
                 <div>{exhibit.name}</div>
                 <div>start: {formatDate(exhibit.start)}</div>
                 <div>end: {formatDate(exhibit.end)}</div>
-                <div></div>
+                <h2 className={exhibit.status === "soon!" ? styles.soon : styles.ended}>{exhibit.status}</h2>
               </div>
             );
           })}

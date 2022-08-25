@@ -14,10 +14,13 @@
   display: inline-block;
   font-size: 20px;
   cursor: pointer;
+  font-family: "Amatic SC";
+  font-size: 3rem;
+  font-weight: 700;
 }
 
 .active {
-    color: var(--blue);
+  color: var(--blue);
 }
 
 .exhibitions {
@@ -26,16 +29,16 @@
 
 .exhibition {
   font-size: 2rem;
-    width: 80%;
-    height: 20rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 8rem auto;
-    border: solid rgb(0, 0, 0);
-    border-radius: 20px;
-    padding: 2rem;
-    cursor: pointer;
+  width: 80%;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 2rem auto;
+  border: solid #485a5e;
+  border-radius: 20px;
+  padding: 2rem;
+  cursor: pointer;
 }
 
 .exhibition:hover {
@@ -43,9 +46,25 @@
 }
 
 .soon {
-    color: #288FA6;
+  color: #288fa6;
 }
 
 .ended {
-    color: rgb(221, 0, 255);
+  color: rgb(221, 0, 255);
 }
+
+@media screen and (max-width: 900px) {
+ .exhibition {
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  justify-content: space-evenly;
+ }
+  }
+  
+  @media screen and (max-width: 600px) {
+  
+  }
+  
+  @media screen and (max-width: 450px) {
+  }

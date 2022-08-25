@@ -7,7 +7,7 @@ export default function handler(req: any, res: any) {
       name: "ETG#2",
       start: new Date(2022, 8, 10).getTime(),
       end: new Date(2022, 9, 10).getTime(),
-      status: "soon",
+      status: "soon!",
     },
     {
       name: "ETG#1",

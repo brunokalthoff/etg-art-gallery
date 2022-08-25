@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import banana from "../public/img/banana.svg";
 
 const Home: NextPage = () => {
   return (
@@ -11,16 +12,13 @@ const Home: NextPage = () => {
         <meta name="description" content="Online Art Gallery" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h3>Up and coming</h3>
-      <div className={styles.news}>
-        <h3>ETG#2</h3>
-    
-        <h4>Know more &#8250; &#8250;</h4>
-      </div>
-      <h3>Exhibitions</h3>
-      
-      <div className={styles.exhibitions}>
-      <h4>View all &#8250; &#8250;</h4>
+      <h1>Welcome to the ETG Online Art Gallery!</h1>
+      <p>
+        There will be more here soon. Check out our exhibitions on the
+        exhibitions page.
+      </p>
+      <div className={styles.image}>
+        <Image layout="responsive" src={banana} alt="" />
       </div>
     </div>
   );

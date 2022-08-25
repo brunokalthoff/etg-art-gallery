@@ -1,42 +1,26 @@
 :root {
   --black: #000;
   --white: #fff;
-  --magenta: #f861a2;
-  --blue: #288FA6;
+  --magenta: #50bed6;
+  --blue: #50bed6;
   --blue1: hsl(191, 80%, 50%);
-} 
+}
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Space Mono", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Space Mono", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 10px;
-  }
-
-  main {
-    margin-top: 5rem;
-  }
-
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-  }
-
-  h2 {
-    font-size: 3rem;
-    font-weight: 700;
-  }
-  h3 {
-    font-family: "Inter";
-    font-size: 2rem;
-  }
-
-h4 {
-  font-family: "Inter";
-  font-size: 1.5rem;
 }
+
+main {
+  padding: 0 2rem;
+  margin-top: 5rem;
+  min-height: calc(100vh - 10rem);
+}
+
 p {
   font-family: "Inter";
   font-size: 2rem;
@@ -45,6 +29,26 @@ p {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1 {
+  font-size: 4rem;
+  font-family: "Amatic SC";
+}
+
+h2 {
+  font-size: 3rem;
+  font-family: "Amatic SC";
+}
+
+h3 {
+  font-size: 2.5rem;
+  font-family: "Amatic SC";
+}
+
+p {
+  font-size: 2rem;
+  font-family: "Space Mono";
 }
 
 * {
@@ -60,3 +64,15 @@ a {
     background: black;
   }
 } */
+
+@media screen and (max-width: 900px) {
+  main {
+    margin-top: 18rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (max-width: 450px) {
+}

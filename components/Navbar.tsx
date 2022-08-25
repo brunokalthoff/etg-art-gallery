@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import styles from "../styles/Navbar.module.css";
 import { useRouter } from "next/router";
@@ -9,7 +9,7 @@ function Navbar() {
     home: "/",
     about: "/about",
     exhibitions: "/exhibitions",
-    sfp: "/studyfreeprogram",
+    sfp: "/affiliations",
   };
   return (
     <nav className={styles.navbar}>
