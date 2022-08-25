@@ -2,10 +2,11 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 0;
+  padding: var(--sectionSpace) 0;
 }
 
 .image {
+  margin-top: var(--sectionSpace);
   width: 50%;
   margin: 0 auto;
 }

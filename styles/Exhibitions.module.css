@@ -2,12 +2,12 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 0;
+  padding: var(--sectionSpace) 0;
 }
 
 .filter {
   display: flex;
-  gap: 2rem;
+  gap: var(--sectionSpace);
 }
 
 .filter > div {
@@ -20,51 +20,99 @@
 }
 
 .active {
-  color: var(--blue);
+  color: var(--blue2);
 }
 
 .exhibitions {
-  margin-top: 2rem;
+  margin-top: var(--sectionSpace);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sectionSpace);
 }
 
 .exhibition {
   font-size: 2rem;
-  width: 80%;
-  height: 20rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  margin: 2rem auto;
-  border: solid #485a5e;
+  justify-content: flex-end;
+  border: 2px solid var(--grey2);
   border-radius: 20px;
-  padding: 2rem;
+  padding: 3rem 1rem 0;
+  gap: 2rem;
   cursor: pointer;
+  min-width: 30rem;
+  max-width: 100%;
+  min-height: 25rem;
+  flex-shrink: 1;
+  flex: 1;
+}
+
+.exhibition > div:first-child {
+  text-align: center;
+}
+
+.exhibition > div:nth-child(2) {
+  color: var(--grey2);
 }
 
 .exhibition:hover {
   transform: translate(-1px, 1px);
 }
 
-.soon {
-  color: #288fa6;
+.exhibition > div,
+.exhibition h2 {
+flex: 1;
 }
 
-.ended {
-  color: rgb(221, 0, 255);
+.exhibition h2 {
+  text-align: right;
+}
+
+.permanent {
+  color: var(--yellow);
+}
+
+.now {
+  color: var(--blue1);
+}
+
+.future {
+  color: var(--green);
+}
+
+.past {
+  color: var(--magenta);
+}
+
+.placeholder {
+  border-radius: 20px;
+  padding: 0 1rem;
+  cursor: pointer;
+  min-width: 30rem;
+  max-width: 100%;
+  flex-shrink: 1;
+  flex: 1;
+  height: 0;
+  max-height: 0;
+  min-height: 0;
 }
 
 @media screen and (max-width: 900px) {
- .exhibition {
-  width: 100%;
-  height: auto;
-  flex-direction: column;
-  justify-content: space-evenly;
- }
+  .exhibition {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 1rem;
   }
-  
-  @media screen and (max-width: 600px) {
-  
-  }
-  
-  @media screen and (max-width: 450px) {
-  }
+}
+
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (max-width: 450px) {
+}

@@ -1,9 +1,20 @@
 :root {
-  --black: #000;
-  --white: #fff;
-  --magenta: #50bed6;
-  --blue: #50bed6;
-  --blue1: hsl(191, 80%, 50%);
+  --black: #131314;
+  --white: #f7f9f9;
+  --blue1: #54c9e3;
+  --blue2: #50bed6;
+  --blue3: #46a7bd;
+  --blue4: #388596;
+  --blue5: #204d57;
+  --grey1: #9cb2b7;
+  --grey2: #4b5052;
+  --magenta: #d66590;
+  --green: #25778a;
+  --yellow: #d6c83a;
+  --sabsch: #8a812c;
+
+  --navbarHeight: 7.5rem;
+  --sectionSpace: 4rem;
 }
 
 html,
@@ -13,12 +24,14 @@ body {
   font-family: "Space Mono", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 10px;
+  color: var(--black);
+  background: var(--white);
 }
 
 main {
   padding: 0 2rem;
   margin-top: 5rem;
-  min-height: calc(100vh - 10rem);
+  min-height: calc(100vh - 5rem - var(--navbarHeight));
 }
 
 p {
@@ -66,6 +79,9 @@ p {
 } */
 
 @media screen and (max-width: 900px) {
+  :root {
+    --navbarHeight: 18rem;
+  }
   main {
     margin-top: 18rem;
   }

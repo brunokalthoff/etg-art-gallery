@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Exhibitions.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { filterEntries, formatDate, addStatus } from "../components/helpers";
 
 function Exhibitions() {
   const [filter, setFilter] = useState("All");
@@ -18,66 +19,22 @@ function Exhibitions() {
     axios(config)
       .then(function (response) {
         console.log(response.data);
-        setExhibitions(response.data);
+        const exhibitions = addStatus(response.data);
+        console.log(exhibitions);
+        setExhibitions(exhibitions);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
 
-  const statusColors = {
-    soon: styles.soon,
-    ended: styles.ended,
-  };
-
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const formatDate = (timestamp: number): string => {
-    const date: Date = new Date(timestamp);
-    const year: number = date.getFullYear();
-    const month: string = months[date.getMonth()];
-    const day: number = date.getDate();
-    if (!timestamp) return "Permanent exhibition";
-    return `${month} ${day}, ${year}`;
-  };
-
   useEffect(() => {
     if (exhibitions) {
-      const results = filterEntries();
+      const results = filterEntries(exhibitions, filter);
       if (results) setFiltered(results);
       else setFiltered(null);
     }
   }, [filter]);
-
-
-  const filterEntries = () => {
-    const now = Date.now();
-    const res = exhibitions.filter((exhibit: any) => {
-      const start = exhibit.start;
-      const end = exhibit.end;
-      console.log(now, start, end);
-      if (filter === "All") return;
-      if (filter === "Now" && (start > now || (end < now && end))) return;
-      if (filter === "Permanent" && end) return;
-      if (filter === "Future" && (start < now || !end)) return;
-      if (filter === "Past" && (!end || end > now)) return;
-      else return exhibit;
-    });
-    return res;
-  };
 
   return (
     <div className={styles.container}>
@@ -122,16 +79,23 @@ function Exhibitions() {
         </div>
       </div>
       <div className={styles.exhibitions}>
-        {!exhibitions && "There are no exhibitions"}
+        {!exhibitions && "Loading exhibitions..."}
         {exhibitions &&
           !(filter !== "All") &&
           exhibitions.map((exhibit: any, key: number) => {
             return (
               <div key={key} className={styles.exhibition}>
                 <div>{exhibit.name}</div>
-                <div>start: {formatDate(exhibit.start)}</div>
-                <div>end: {formatDate(exhibit.end)}</div>
-                <h2 className={exhibit.status === "soon!" ? styles.soon : styles.ended}>{exhibit.status}</h2>
+                <div>
+                  <div>
+                    start:{" "}
+                    {!exhibit.start
+                      ? "-" + formatDate(exhibit.start)
+                      : formatDate(exhibit.start)}
+                  </div>
+                  <div>end: {formatDate(exhibit.end)}</div>
+                </div>
+                <h2 className={exhibit.color}>{exhibit.status}</h2>
               </div>
             );
           })}
@@ -142,12 +106,17 @@ function Exhibitions() {
             return (
               <div key={key} className={styles.exhibition}>
                 <div>{exhibit.name}</div>
-                <div>start: {formatDate(exhibit.start)}</div>
-                <div>end: {formatDate(exhibit.end)}</div>
-                <h2 className={exhibit.status === "soon!" ? styles.soon : styles.ended}>{exhibit.status}</h2>
+                <div>
+                  <div>start: {formatDate(exhibit.start)}</div>
+                  <div>end: {formatDate(exhibit.end)}</div>
+                </div>
+                <h2 className={exhibit.color}>{exhibit.status}</h2>
               </div>
             );
           })}
+        <div style={!exhibitions || !filtered ? {} : {visibility: 'hidden'}} className={styles.placeholder}></div>
+        <div style={!exhibitions || !filtered ? {} : {visibility: 'hidden'}} className={styles.placeholder}></div>
+        <div style={!exhibitions || !filtered ? {} : {visibility: 'hidden'}} className={styles.placeholder}></div>
       </div>
     </div>
   );

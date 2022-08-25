@@ -5,7 +5,7 @@
   right: 0;
   z-index: 100;
   width: 100%;
-  height: 7.5rem;
+  height: var(--navbarHeight);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .linksActive {
-  color: var(--magenta);
+  color: var(--blue2);
 }
 
 .logo {
@@ -42,7 +42,6 @@
 
 @media screen and (max-width: 900px) {
 .navbar {
-  height: 18rem;
   padding: 1rem;
 }
 
