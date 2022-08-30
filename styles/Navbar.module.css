@@ -41,7 +41,7 @@
 }
 
 @media screen and (max-width: 900px) {
-.navbar {
+/* .navbar {
   padding: 1rem;
 }
 
@@ -51,7 +51,7 @@
 
 .logo {
   border-bottom: 1px solid ;
-}
+} */
 }
 
 @media screen and (max-width: 600px) {

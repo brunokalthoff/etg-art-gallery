@@ -2,19 +2,14 @@
 import Link from "next/link";
 import styles from "../styles/Navbar.module.css";
 import { useRouter } from "next/router";
-
+import { link } from "./helpers";
 function Navbar() {
   const router = useRouter();
-  const link = {
-    home: "/",
-    about: "/about",
-    exhibitions: "/exhibitions",
-    sfp: "/affiliations",
-  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.inner}>
-        <div className={styles.logo} onClick={() => router.push("/")}>
+        <div className={styles.logo} onClick={() => router.push(link.home)}>
           Enter The Gateway
         </div>
 

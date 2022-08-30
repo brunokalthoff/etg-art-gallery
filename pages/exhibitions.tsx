@@ -1,40 +1,50 @@
 import Head from "next/head";
 import styles from "../styles/Exhibitions.module.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { filterEntries, formatDate, addStatus } from "../components/helpers";
+import {
+  filterEntries,
+  formatDate,
+  addStatus,
+  parseDate,
+} from "../components/helpers";
+import { GraphQLClient, gql } from "graphql-request";
 
-function Exhibitions() {
-  const [filter, setFilter] = useState("All");
-  const [exhibitions, setExhibitions] = useState<any>(null);
-  const [filtered, setFiltered] = useState<any>(null);
+const hygraph = new GraphQLClient(
+  "https://api-eu-central-1.hygraph.com/v2/cl7fqxy9p71pu01ujcdjzdgqr/master"
+);
 
-  useEffect(() => {
-    var config = {
-      method: "get",
-      url: "/api/exhibitions",
-      headers: {},
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-        const exhibitions = addStatus(response.data);
-        console.log(exhibitions);
-        setExhibitions(exhibitions);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (exhibitions) {
-      const results = filterEntries(exhibitions, filter);
-      if (results) setFiltered(results);
-      else setFiltered(null);
+const QUERY = gql`
+  {
+    exhibitionsIEDB {
+      title
+      end
+      start
+      etGsOwnExhibition
+      descriptionShort
+      thumbnail {
+        id
+      }
     }
-  }, [filter]);
+  }
+`;
+
+export async function getStaticProps() {
+  const { exhibitionsIEDB } = await hygraph.request(QUERY);
+  const exhis = await parseDate(exhibitionsIEDB);
+  const exhibitions = addStatus(exhis);
+  return {
+    props: { exhibitions },
+  };
+}
+
+function Exhibitions({ exhibitions }: any) {
+  const [filter, setFilter] = useState<null | string>(null);
+  const [filtered, setFiltered] = useState<any>(exhibitions);
+
+  useEffect(() => {
+    const results = filterEntries(exhibitions, filter);
+    if (results) setFiltered(results);
+  }, [filter, exhibitions]);
 
   return (
     <div className={styles.container}>
@@ -46,8 +56,8 @@ function Exhibitions() {
       {/* <h1>Exhibitions</h1> */}
       <div className={styles.filter}>
         <div
-          onClick={() => setFilter("All")}
-          className={filter === "All" ? styles.active : ""}
+          onClick={() => setFilter(null)}
+          className={!filter ? styles.active : ""}
         >
           All
         </div>
@@ -78,45 +88,23 @@ function Exhibitions() {
           Past
         </div>
       </div>
+
       <div className={styles.exhibitions}>
-        {!exhibitions && "Loading exhibitions..."}
-        {exhibitions &&
-          !(filter !== "All") &&
-          exhibitions.map((exhibit: any, key: number) => {
-            return (
-              <div key={key} className={styles.exhibition}>
-                <div>{exhibit.name}</div>
-                <div>
-                  <div>
-                    start:{" "}
-                    {!exhibit.start
-                      ? "-" + formatDate(exhibit.start)
-                      : formatDate(exhibit.start)}
-                  </div>
-                  <div>end: {formatDate(exhibit.end)}</div>
-                </div>
-                <h2 className={exhibit.color}>{exhibit.status}</h2>
+        {filtered.map((exhibit: any, key: number) => {
+          return (
+            <div key={key} className={styles.exhibition}>
+              <div>{exhibit.title}</div>
+              <div>
+                <div>start: {formatDate(exhibit.start)}</div>
+                <div>end: {formatDate(exhibit.end)}</div>
               </div>
-            );
-          })}
-        {filter !== "All" && !filtered && "Nothing found"}
-        {filter !== "All" &&
-          filtered &&
-          filtered.map((exhibit: any, key: number) => {
-            return (
-              <div key={key} className={styles.exhibition}>
-                <div>{exhibit.name}</div>
-                <div>
-                  <div>start: {formatDate(exhibit.start)}</div>
-                  <div>end: {formatDate(exhibit.end)}</div>
-                </div>
-                <h2 className={exhibit.color}>{exhibit.status}</h2>
-              </div>
-            );
-          })}
-        <div style={!exhibitions || !filtered ? {} : {visibility: 'hidden'}} className={styles.placeholder}></div>
-        <div style={!exhibitions || !filtered ? {} : {visibility: 'hidden'}} className={styles.placeholder}></div>
-        <div style={!exhibitions || !filtered ? {} : {visibility: 'hidden'}} className={styles.placeholder}></div>
+              <h2 className={exhibit.color}>{exhibit.status}</h2>
+            </div>
+          );
+        })}
+        {[1, 2, 3].map((x) => (
+          <div key={x} className={styles.placeholder} />
+        ))}
       </div>
     </div>
   );

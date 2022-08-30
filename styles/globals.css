@@ -79,12 +79,12 @@ p {
 } */
 
 @media screen and (max-width: 900px) {
-  :root {
-    --navbarHeight: 18rem;
+  /* :root {
+    --navbarHeikght: 18rem;
   }
   main {
     margin-top: 18rem;
-  }
+  } */
 }
 
 @media screen and (max-width: 600px) {

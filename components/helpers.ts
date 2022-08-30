@@ -1,11 +1,30 @@
 import styles from "../styles/Exhibitions.module.css";
 
-export const filterEntries = (exhibitions: any, filter: string) => {
+export const link = {
+  home: "/",
+  about: "/about",
+  exhibitions: "/exhibitions",
+  sfp: "/affiliations",
+};
+
+export const parseDate = (exhibits: []) => {
+  const result = exhibits.map((exhibit: any) => {
+    const altered = {
+      ...exhibit,
+      start: Date.parse(exhibit.start),
+      end: Date.parse(exhibit.end),
+    };
+    return altered;
+  });
+  return result;
+};
+
+export const filterEntries = (exhibitions: any, filter: null | string) => {
   const now = Date.now();
   const results = exhibitions.filter((exhibit: any) => {
     const start = exhibit.start;
     const end = exhibit.end;
-    if (filter === "All") return;
+    if (!filter) return exhibit;
     if (filter === "Now" && (start > now || (end < now && end))) return;
     if (filter === "Permanent" && end) return;
     if (filter === "Future" && (start < now || !end)) return;
@@ -39,12 +58,11 @@ export const formatDate = (timestamp: number): string => {
   return `${month} ${day}, ${year}`;
 };
 
-export const addStatus = (exhibitions: []) => {
+export const addStatus = (exhibitions: {}[]) => {
   const now = Date.now();
   const result = exhibitions.map((exhibit: any) => {
     const start = exhibit.start;
     const end = exhibit.end;
-    console.log("start: ", start, "end: ", end);
     if (!end || !start)
       return {
         ...exhibit,
