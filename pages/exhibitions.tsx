@@ -28,7 +28,7 @@ const QUERY = gql`
   }
 `;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { exhibitionsIEDB } = await hygraph.request(QUERY);
   const exhis = await parseDate(exhibitionsIEDB);
   const exhibitions = addStatus(exhis);
