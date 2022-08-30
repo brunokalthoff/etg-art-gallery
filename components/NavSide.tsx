@@ -61,7 +61,7 @@ const Path = (props: any) => (
   />
 );
 
-const MenuToggle = ({ toggle }) => (
+const MenuToggle = ({ toggle }:any) => (
   <button className={styles.button} onClick={toggle}>
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
@@ -127,7 +127,7 @@ const variantsMenuItem = {
 // const colors: string[] = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
 const texts : string[] = ["Exhibition", "Tickets", "ETG", "UNMIND STUDY", "Affiliates"]
 const icons: any[] = [heart, key, info, cloud, coin]
-export const MenuItem = ({ i }) => {
+export const MenuItem = ({ i }:any) => {
 //   const style = { border: `2px solid ${colors[i]}` };
   return (
     <motion.li
@@ -143,13 +143,13 @@ export const MenuItem = ({ i }) => {
   );
 };
 
-const useDimensions = (ref) => {
+const useDimensions = (ref:any) => {
   const dimensions = useRef({ width: 0, height: 0 });
 
   useEffect(() => {
     dimensions.current.width = ref.current.offsetWidth;
     dimensions.current.height = ref.current.offsetHeight;
-  }, []);
+  }, [ref]);
 
   return dimensions.current;
 };
