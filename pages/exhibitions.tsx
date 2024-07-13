@@ -19,6 +19,7 @@ const QUERY = gql`
       title
       end
       start
+      artists
       etGsOwnExhibition
       descriptionShort
       thumbnail {
@@ -30,7 +31,7 @@ const QUERY = gql`
 
 export async function getServerSideProps() {
   const { exhibitionsIEDB } = await hygraph.request(QUERY);
-  const exhis = await parseDate(exhibitionsIEDB);
+  const exhis = parseDate(exhibitionsIEDB);
   const exhibitions = addStatus(exhis);
   return {
     props: { exhibitions },
@@ -45,7 +46,6 @@ function Exhibitions({ exhibitions }: any) {
     const results = filterEntries(exhibitions, filter);
     if (results) setFiltered(results);
   }, [filter, exhibitions]);
-
   return (
     <div className={styles.container}>
       <Head>
@@ -53,7 +53,7 @@ function Exhibitions({ exhibitions }: any) {
         <meta name="description" content="Online Art Gallery" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <h1>Exhibitions</h1> */}
+      <h1>Exhibitions</h1>
       <div className={styles.filter}>
         <div
           onClick={() => setFilter(null)}
@@ -97,6 +97,9 @@ function Exhibitions({ exhibitions }: any) {
               <div>
                 <div>start: {formatDate(exhibit.start)}</div>
                 <div>end: {formatDate(exhibit.end)}</div>
+                {exhibit.artists.map((x: string) => (
+                  <div>{x}</div>
+                ))}
               </div>
               <h2 className={exhibit.color}>{exhibit.status}</h2>
             </div>
@@ -105,6 +108,77 @@ function Exhibitions({ exhibitions }: any) {
         {[1, 2, 3].map((x) => (
           <div key={x} className={styles.placeholder} />
         ))}
+      </div>
+
+      <h2>Up and running</h2>
+
+      <div className="flex gap-6">
+        {" "}
+        {filterEntries(exhibitions, "Now").map((exhibit: any, key: number) => {
+          return (
+            <div
+              key={key}
+              className={styles.exhibition}
+              style={{
+                width: "40rem",
+                maxWidth: "40rem",
+                height: "40rem",
+                maxHeight: "40rem",
+              }}
+            >
+              <div>{exhibit.title}</div>
+              <div>
+                <div>start: {formatDate(exhibit.start)}</div>
+                <div>end: {formatDate(exhibit.end)}</div>
+                {exhibit.artists.map((x: string) => (
+                  <div>{x}</div>
+                ))}
+              </div>
+              <h2 className={exhibit.color}>{exhibit.status}</h2>
+            </div>
+          );
+        })}{" "}
+      </div>
+
+      <h2>All</h2>
+
+      <div className="flex gap-6">
+        {" "}
+        {filterEntries(exhibitions, "All").map((exhibit: any, key: number) => {
+          return (
+            <div key={key} className={styles.exhibition}>
+              <div>{exhibit.title}</div>
+              <div>
+                <div>start: {formatDate(exhibit.start)}</div>
+                <div>end: {formatDate(exhibit.end)}</div>
+              </div>
+              <h2 className={exhibit.color}>{exhibit.status}</h2>
+            </div>
+          );
+        })}{" "}
+      </div>
+
+      <h2>Permanent Exhibitions</h2>
+
+      <div className="flex">
+        {" "}
+        {filterEntries(exhibitions, "Permanent").map(
+          (exhibit: any, key: number) => {
+            return (
+              <div key={key} className={styles.exhibition}>
+                <div>{exhibit.title}</div>
+                <div>
+                  <div>start: {formatDate(exhibit.start)}</div>
+                  <div>end: {formatDate(exhibit.end)}</div>
+                  {exhibit.artists.map((x: string) => (
+                    <div>{x}</div>
+                  ))}
+                </div>
+                <h2 className={exhibit.color}>{exhibit.status}</h2>
+              </div>
+            );
+          }
+        )}{" "}
       </div>
     </div>
   );

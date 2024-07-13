@@ -15,6 +15,7 @@
   font-weight: 700;
   font-size: 3.5rem;
   padding: 0 2rem;
+  border-bottom: dotted;
 }
 
 .inner {
@@ -32,7 +33,7 @@
 
 .logo {
   cursor: pointer;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .links {
@@ -41,7 +42,7 @@
 }
 
 @media screen and (max-width: 900px) {
-/* .navbar {
+  /* .navbar {
   padding: 1rem;
 }
 
@@ -55,7 +56,6 @@
 }
 
 @media screen and (max-width: 600px) {
-
 }
 
 @media screen and (max-width: 450px) {
